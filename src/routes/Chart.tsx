@@ -1,10 +1,8 @@
 import { useQuery } from "react-query";
-import { fetchCoinHistory } from "./api";
+import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
-
-interface ChartProps {
-  coinId: string;
-}
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 interface IHistorical {
   time_open: string;
@@ -16,8 +14,11 @@ interface IHistorical {
   volume: number;
   market_cap: number;
 }
-
+interface ChartProps {
+  coinId: string;
+}
 function Chart({ coinId }: ChartProps) {
+  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -34,13 +35,13 @@ function Chart({ coinId }: ChartProps) {
           type="line"
           series={[
             {
-              name: "price",
+              name: "Price",
               data: data?.map((price) => price.close) as number[],
             },
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               height: 300,
@@ -55,7 +56,9 @@ function Chart({ coinId }: ChartProps) {
               curve: "smooth",
               width: 4,
             },
-            yaxis: { show: false },
+            yaxis: {
+              show: false,
+            },
             xaxis: {
               axisBorder: { show: false },
               axisTicks: { show: false },
@@ -70,7 +73,7 @@ function Chart({ coinId }: ChartProps) {
             colors: ["#0fbcf9"],
             tooltip: {
               y: {
-                formatter: (value) => `$ ${value.toFixed(2)}`,
+                formatter: (value) => `$${value.toFixed(2)}`,
               },
             },
           }}

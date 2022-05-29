@@ -1860,3 +1860,67 @@ import { Helmet } from "react-helmet";
 ```
 
 Helmet은 그저 head로 가는 direct link일 뿐이다.
+
+오류를 하나 잡을 것인데 하는 **ApexChart**를 쓰는 도중 다음과 같은 오류가 나왔따.
+
+```tsx
+// Chart.tsx
+        ...
+
+
+        <ApexChart
+          type="line"
+          series={[
+            {
+              name: "Price",
+              data: data?.map((price) => price.close),
+            },
+          ]}
+
+          ...
+```
+
+name과 data쪽에서 다음과 같은 **오류**가 나왔다.
+
+```
+Overload 1 of 2, '(props: Props | Readonly): ReactApexChart', gave the following error.
+Type '{ name: string; data: any[] | undefined; }' is not assignable to type 'number'.
+Overload 2 of 2, '(props: Props, context: any): ReactApexChart', gave the following error.
+Type '{ name: string; data: any[] | undefined; }' is not assignable to type 'number'.
+```
+
+무슨 오류일까?
+
+두 가지를 해보면서 생각해봤다.
+
+1.  name이나 data둘 중 하나늘 지워봤다.
+
+name을 지우면 똑같은 오류가 계속 나지만, data를 지우면 오류가 바뀐다.
+
+```
+Type '{ name: string; }' is not assignable to type 'number'.
+```
+
+그래서 아마도 **data쪽에서 문제가 있을 것이라고 접근은 하였다.**
+
+최종적으로 문제에 도달하지는 못했지만, 문제는 찾아보니 이와 같았다.
+
+**series data[]** 가 **받아야 와야 하는 건 number** 인데 현재 **data?.map()** 으로 읽어올때랑 아닐때를 구분해서 받아야 하는데 **읽어오면 number 이지만 못읽어오면 undefind**가 되서 문제가 되는 것이다.
+그래서 저 형식이 **number 로 강제해주면 해결되는 문제**입니다.
+
+그래서 **두 가지 방식**이 존재한다.
+
+1.  널 병합 연산자(??)를 사용하여 []를 붙여준다.
+2.  as number[]를 붙여준다.
+
+**1번의 경우**
+
+```tsx
+data: data?.map((price) => price.close) ?? [],
+```
+
+**2번의 경우**
+
+```tsx
+data: data?.map((price) => price.close) as number[],
+```
