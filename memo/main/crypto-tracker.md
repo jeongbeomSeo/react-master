@@ -5,6 +5,7 @@
     - [1.1 Nested Router](#11-nested-router)
   - [2. Styles](#2-styles)
     - [2.1 createGlobalStyle](#21-createglobalstyle)
+      - [2.1.1 Component 정리](#211-component-정리)
     - [2.2 Theme](#22-theme)
   - [3. Home Screen(Coins)](#3-home-screencoins)
     - [3.1 Array(map)](#31-arraymap)
@@ -331,11 +332,11 @@ function App() {
 
     Type '{ children: Element; }' has no properties in common with type 'IntrinsicAttributes & IntrinsicClassAttributes
 
-<h1>
-  이 부분은 나중에 채울 것!!! (질문 중...)
-</h1>
+이 오류 에 대해서 이해하기 위해 [아래에서 Component개념](#211-component-정리)을 좀 더 정리해 보기로 하자.
 
-`<div></div>`로 감싸준다면? 쓸모 없는 div로 넘쳐날 것이다.
+일단 계속 진행해보자면,
+
+만약 `<div></div>`로 감싸준다고 한다면? 쓸모 없는 div로 넘쳐날 것이다.
 
 그래서 리액트 팀은 **Fragment**를 만들었다. 일종의 **Ghost Component**의 역할을 한다.
 
@@ -361,6 +362,84 @@ function App() {
 나는 CSS Reset과 폰트를 넣어주었다.
 
 > 참고: [Google Fonts](https://fonts.google.com)
+
+오류를 정확히 이해 하기 위해 Component에 대해서 좀만 더 정리해보자.
+
+#### 2.1.1 Component 정리
+
+먼저 현재 이전까지와 다르게 **GlobalStyle**은 **다른 컴포넌트**를 감쌀 수 없다.
+
+그렇다면 **감싸는 컴포넌트**와 **감싸지 않는 컴포넌트**의 명칭을 알아보자.
+
+**감싸지 않는 컴포넌트**: self-closing tag
+
+**감싸는 컴포넌트**: 일반적인 Component
+
+> 일반적인 Component도 **Children prop**이 없으면 **감싸지 않는 컴포넌트**가 될 수 있습니다.
+
+여기서 좀 생각해보자.
+
+그렇다면 **감싸는 컴포넌트**와 **감싸지 않는 컴포넌트**의 **구분점**은 **Children prop**의 유무인 것이다.
+
+**createGlobalStyle**을 사용해 생성된 **컴포넌트**는 **children prop**이 존재하지 않는다.
+
+그 말은 즉, **이 컴포넌트에는 children이 위치할 지점이 없다**는 것이다. **컴포넌트 하위에 children을 전달해도, children을 어디에 놓아야 될 지 정의되어 있지 않으니깐 에러가 발생**한 것이다.
+
+아까 봤던 오류를 다시 한번 봐보자.
+
+    Type '{ children: Element; }' has no properties in common with type 'IntrinsicAttributes & IntrinsicClassAttributes
+
+React 공식문서에는 다음과 같이 나와있다.
+
+**컴포넌트**가 원시 타입의 값, React 엘리먼트 혹은 함수 등 **어떠한 props도 받을 수 있다는 것을 강조**하며 **상속보다는 props와 합성**을 권장한다. 다음은 **합성**을 하는 도중 **children을 prop으로 전달하는 과정을 생략**해 발생한 타입 **에러**이다.
+
+이 말은 추측하건데,
+
+컴포넌트를 감싸는 컴포넌트 즉, 부모 컴포넌트와 자식 컴포넌트는 상속하는 관계가 아니라, prop을 넘겨주면서 합성을 해주는 것이다. 그 과정에서 prop을 안 넣어주었기 때문에 문제가 생긴 것이라고 본다.
+
+> 여기서 말하는 **상속(Inheritance)** 는 물려준다는 의미다. **어떤 객체**가 있을 때 **그 객체의 필드(변수)와 메소드를 다른 객체가 물려 받을 수 있는 기능**을 **상속**이라고 한다.
+
+**children**의 개념을 좀 더 이해하기 위해 예시를 들어보며 봐보자.
+
+A 컴포넌트가 그 컴포넌트 자체에 속해있지 않은 다른 B 컴포넌트를 A 컴포넌트의 하위에 놓고 싶은 경우가 있을 수 있다.
+
+예를 들면, A 컴포넌트는 버튼인데, 버튼의 중앙에 아이콘을 동적으로 바꿀 수 있다고 가정해보자.
+
+두 가지 방법을 봐볼 것이다.
+
+a. **사용 가능한 아이콘들**을 **A 컴포넌트 내부에서 모두 정의한 후**에 사용하는 쪽에서 어떤 아이콘인지를 정해주면 해당하는 아이콘 보여주기
+
+```jsx
+const Button = (type) => {
+  const icon = type === "A" ? "aIcon" : "bIcon";
+  return (
+    <button>
+      <i type={icon} />
+    </button>
+  );
+};
+
+// 사용할 때는
+<Button type="A" />;
+```
+
+b. A 컴포넌트는 아이콘이 위치할 영역만 정하고, **무슨 아이콘이 될지는 사용하는 곳에서 정의**하기
+
+```jsx
+const Button = (children) => {
+  return <button>{children}</button>;
+};
+
+// 사용할 때는
+<Button>
+  <i type="aIcon" />
+</Button>;
+```
+
+a와 b의 구현 차이가 느껴지나요?
+**a의 방식을 사용할 경우**, 컴포넌트가 아이콘에 대한 정보를 알고 있어야 하기 때문에 아이콘의 종류가 많아진다거나 하면 **컴포넌트가 필요 이상으로 커질 수 있다.**
+
+반면에 **b의 방식을 사용할 경우**, 컴포넌트는 아이콘이 표시될 위치만 알고 있고 있을 뿐 **아이콘에 대한 정보는 컴포넌트 자체가 알 필요가 없으므로 간결하다.**
 
 ### 2.2 Theme
 
@@ -1793,7 +1872,7 @@ TS2769: No overload matches this call.
 
 ## 7. Final Touches
 
-마미루 작업을 들어갈 것이다.
+마무리 작업을 들어갈 것이다.
 
 먼저 현재 코인의 가격이 보여야 되는 부분에 다른 데이터가 들어가 있다.
 
@@ -1924,3 +2003,5 @@ data: data?.map((price) => price.close) ?? [],
 ```tsx
 data: data?.map((price) => price.close) as number[],
 ```
+
+요번 파트는 여기서 끝낼 것이다. 하지만 Crypto Tracker의 구현에서 필요한 부분이 남아있지만, 그것에 대해선 [다음 파트](./state-management.md)에서 해결해 볼 것이다.
