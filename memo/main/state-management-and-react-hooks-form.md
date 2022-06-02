@@ -389,6 +389,81 @@ export const memoListSelector = selector<MemoList>({
 
 이렇게 만들었을 때 장점은, focusLabel의 아디가 바뀔 때마다 이 seletor도 **동적으로 해당하는 리스트를 반환**해주는 부분이다.
 
+Slector는 위처럼 파생된 데이터를 사용하는 목적성 외에도, **유용한 사용성들이 몇가지 존재**한다.
+
+- **set 함수(포르퍼티)** : 쓰기 가능한 Selector
+- **비동기 Selector**
+- **Loadable** : 또 다른 비동기 제어 방법
+- **캐싱** : Selector를 통한 성능 향상
+
+하나씩 알아보자.
+
+**1. set함수**
+
+Selector에 **set을 설정**하게 되면, **쓰기 가능한 모드**로 변경된다.
+
+매개변수는 2가지다.
+
+- **콜백 객체**
+- **새로운 Value**
+
+콜백객체 내에는 마찬가지로 **set() 메서드가 존재**하며, 이는 **다른 atom들을 새로운 값으로 세팅**하기 위해 사용된다.
+
+> set 메서드를 쓸 때 유의할 점은 **본인 스스로를 수정할 수 없다는 것**이다! 본인을 갱신하기 위해선 추가적으로 의존성을 설정하는데 이 방법은 참고 페이지를 보자.
+
+```tsx
+const proxySelector = selector({
+  key: "ProxySelector",
+  get: ({ get }) => ({ ...get(myAtom), extraField: "hi" }),
+  set: ({ set }, newValue) => set(myAtom, newValue),
+});
+```
+
+이처럼 set() 메서드드 **상태변수, 값 2가지 배개변수**로 받는다. 또한, 해당 상태값을 **newValue로 갱신해주는 역할**을 한다.
+
+**컴포넌트에서 이 set을 사용할때**는 **useRecoilState()** Hooks로 Selector를 가져오면 **setter 함수가 이 set()의 역할**을 하는 것이다.
+
+```tsx
+// 컴포넌트 예시
+
+// ...
+  const [proxy, setProxy] = useRecoilState(proxySelector);
+
+  setProxy('새로운 값!');
+}
+```
+
+**2. 비동기 Selector**
+
+**Recoil의 강점**중 하나이자 **상태값에 Selector가 많이 쓰이는 이유**일 것이다.
+
+API등 **비동기 요청을 한 데이터를 전역상태에 넣는** 경우가 종종 있다. 이 때, 이 **비동기 호출을 내부에 설정해 상태값으로 반환**하는 역할 역시 **Selector**가 해준다.
+
+```tsx
+const myQuery = selector({
+  key: "MyQuery",
+  get: async ({ get }) => {
+    return await myAsyncQuery(get(queryParamState)); // 비동기 호출 부분
+  },
+});
+```
+
+**유의해야 할 부분은,** 비동기 Promise 객체를 반환하기 때문에 **async/await 문**을 적용해야 하는 부분이다.
+
+또한, 이렇게 **비동기 Selctor만 사용하면 아래와 같은 에러가 발생**하는데, 이는 **Suspense에 대한 처리**를 하지 않아서 발생한 것이다.
+
+![slector-suspense-error](./screenshots/slector-suspense-error.png)
+
+Recoil은 **비동기 처리를 React의 suspense를 통해 지원**한다. 위 에러는, **비동기 호출간 노출할 fallback UI가 존재하지 않아 발생**했다.
+
+그렇기에, 비동기 호출이 사용되는 컴포넌트를 `<React.Suspense>`로 **랩핑**해주고, **fallback으로 호출할 컴포넌트를 설정**하면 된다.
+
+```tsx
+<React.Suspense fallback={<div>Loading...</div>}>
+  <Component />
+</React.Suspense>
+```
+
 추가적인 개념은 참고 사이트를 올려 놓겠다.
 
 참고:
