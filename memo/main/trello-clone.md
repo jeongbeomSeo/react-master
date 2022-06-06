@@ -1615,3 +1615,7 @@ function Board({ toDos, boardId }: IBoardProps) {
 내가 input에 작성한 **to Do text를 Done board에 넣어준다**고 해보자.
 
 그러면 Done board를 제외한 나머지는 바뀌면 안되고, Done안에서만 **to Do Text를 마지막에 붙여줄 것**이다.
+
+모든 코드는 Github를 통해 확인하자.
+
+[jeongbeomSeo/react-master/TRELLO-CLONE](https://github.com/jeongbeomSeo/react-master/tree/ad5f367a26fa94a51662ae80d570a9989196b7cd)

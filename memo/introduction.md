@@ -13,3 +13,4 @@
 3. [CRYPTO TRACKER](./main/crypto-tracker.md)
 4. [State Management and React Hooks Form](main/state-management-and-react-hooks-form.md)
 5. [TRELLO CLONE](./main/trello-clone.md)
+6. [Animations](./main/animations.md)
