@@ -774,7 +774,7 @@ useEffect(() => {
 
 ![example-slice-function](./screenshots/example-slice-function.png)
 
-최조애적으로 Loader까지 적용하고 보면 이와 같다.
+최종적으로 Loader까지 적용하고 보면 이와 같다.
 
 ```tsx
 import { useEffect, useState } from "react";
@@ -1152,7 +1152,7 @@ const [priceInfo, setPriceInfo] = useState({});
 
 ![consoleLog-storeObject-temp1](./screenshots/consoleLog-storeObject-temp1.png)
 
-이것은 내가 지정하고 싶은 **객체를 global영역에 임시 변수로 저장**하는 Chrmoe 개발자 도구에서 지원하는 기능이다.
+이것은 내가 지정하고 싶은 **객체를 global영역에 임시 변수로 저장**하는 Chrome 개발자 도구에서 지원하는 기능이다.
 
 이후 다음과 같이 해주자.
 
@@ -1858,7 +1858,7 @@ TS2769: No overload matches this call.
 두 가지 방법중 선택하자.
 
 1. 널 병합 연산자(??) 사용
-2. `?.` 사용
+2. `as` 사용
 
 1번의 경우
 
