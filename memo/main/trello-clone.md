@@ -1,10 +1,24 @@
 # TRELLO CLONE
 
+- [TRELLO CLONE](#trello-clone)
+  - [1. Introduction](#1-introduction)
+  - [2. react-beautiful-dnd](#2-react-beautiful-dnd)
+    - [2.1 SET UP](#21-set-up)
+    - [2.2 Droppable and Draggable](#22-droppable-and-draggable)
+    - [2.3 Styles and Placeholders](#23-styles-and-placeholders)
+    - [2.4 onDragEnd](#24-ondragend)
+    - [2.5 Increase Performance](#25-increase-performance)
+    - [2.6 Make Multi Boards](#26-make-multi-boards)
+    - [2.7 Same Board Movement](#27-same-board-movement)
+    - [2.8 Cross Board Movement](#28-cross-board-movement)
+    - [2.9 Droppable Snapshot](#29-droppable-snapshot)
+  - [3. Task Objects](#3-task-objects)
+
 ## 1. Introduction
 
 이번 파트에선 칸반 앱을 만들 것이다.
 
-> **칸반**은 팀이 수행해야 하는 업무와 각 팀원이 맡을 수 있는 작업량 간에 균형을 맞추는 수단입니다. 칸반 프레임춰크는 업무 항목을 제품 백로그에서 안정적인 작업 흐름으로 **끌어올** 수 있는 지속적인 개선 철학을 기반으로 합니다.
+> **칸반**은 팀이 수행해야 하는 업무와 각 팀원이 맡을 수 있는 작업량 간에 균형을 맞추는 수단입니다. 칸반 프레임워크는 업무 항목을 제품 백로그에서 안정적인 작업 흐름으로 **끌어올** 수 있는 지속적인 개선 철학을 기반으로 합니다.
 
 ![trello-image](./screenshots/trello-image.png)
 
@@ -67,7 +81,7 @@ Document: [react-beautiful-dnd - npm](https://www.npmjs.com/package/react-beauti
 
 > 중첩된 `<DragDropContext>`는 지원하지 않기 떄문이다.
 >
-> **Darg and Drop**을 원한다면 `<Droppable />`및 `<Draggable />`의 소품을 사용하여 원하는 조건부 **Darg and Drop**을 수행 할 수 잇ㅆ다.
+> **Darg and Drop**을 원한다면 `<Droppable />`및 `<Draggable />`의 소품을 사용하여 원하는 조건부 **Darg and Drop**을 수행 할 수 있다.
 
 일단 예시 코드를 한번 보자.
 

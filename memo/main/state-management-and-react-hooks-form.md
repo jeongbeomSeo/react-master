@@ -39,7 +39,7 @@
 
 ## 2. State Management
 
-먼저 **State Management**를 알아보기 전에 **State(상태)**에 대해서 한번 더 짚고 넘어가자.
+먼저 **State Management**를 알아보기 전에 **State(상태)** 에 대해서 한번 더 짚고 넘어가자.
 
 ### 2.1 State(상태)
 
@@ -86,7 +86,7 @@ State가 변경되면 Re-Rendering된다고 앞에서 말했었다.
 
 ### 2.3 Recoil
 
-**Recoil**은 React를 위환 **전역 상태관리 라이브러리**로, 2020년 5월 Factbook에서 출시 하였다. 그렇기에, 다른 라이브버리(Redux, Mobx)와 달리 **React 전용**이며 **React에 최적화**되어 있다고 할 수 있다.
+**Recoil**은 React를 위환 **전역 상태관리 라이브러리**로, 2020년 5월 Factbook에서 출시 하였다. 그렇기에, 다른 라이브러리(Redux, Mobx)와 달리 **React 전용**이며 **React에 최적화**되어 있다고 할 수 있다.
 
 비동기 요청이 매우 심플하고, Redux처럼 다양한 구성(action, reducer 등)을 할 필요가 없다.
 
@@ -102,7 +102,7 @@ State가 변경되면 Re-Rendering된다고 앞에서 말했었다.
 - **복잡한 Boiler Plate 초기세팅이 요구된다!** Store, Action, Reducer등 다양한 구성요소가 필요해 **비효율적이며 러닝커브가 높다**.
 - **비동기 데이터에 추가 리소스가 요구된다!** Redux-sage등 전역상태에서 **비동기 데이터를 호출하기 위한 서드파트 라이브러리가 필요**하다.
 
-이러한 단점들을 보완한, 그리고 React에서 좀 더 최적화된 전역 상태관리 라이브버리로 내놓은 것이 **Recoil**이다.
+이러한 단점들을 보완한, 그리고 React에서 좀 더 최적화된 전역 상태관리 라이브러리로 내놓은 것이 **Recoil**이다.
 
 출처:
 
@@ -214,7 +214,7 @@ export default App;
 그리고 **Router**에서 prop을 받아서 **Coins**로 넘겨주면 Coins에서 사용 가능 할 것이다.
 
 ```tsx
-// Router.tsx
+// Coins.tsx
 
 interface IRouterProps {
   toggleDark: () => void;
@@ -318,7 +318,7 @@ export const isDarkAtom = atom({
 
 #### 2.3.4 전역상태 관련 Hooks
 
-**전역상태(Atoms, Seletor)**를 **get/set**하기 위해 Recoil에서 제공하는 Hooks들을 사용한다. 기본적으로 아래 **4가지**가 크게 사용된다.
+**전역상태(Atoms, Seletor)** 를 **get/set**하기 위해 Recoil에서 제공하는 Hooks들을 사용한다. 기본적으로 아래 **4가지**가 크게 사용된다.
 
 - **useRecoilState()**: **useState()와 유사**하다. **[state, setState] 튜플에 할당**하며, **인자**에 **Atoms**(혹은 **Selector**)를 넣어준다.
 - **useRecoilValue()**: 전역상태의 **state 상태값만을 참조**하기 위해 사용된다. 선언된 변수에 할당하여 사용하면 된다.
@@ -693,7 +693,7 @@ function ToDoList() {
 }
 ```
 
-> **`...`** 는 ES6문법으로 **register함수**를 **spred해서 넣어주는 것**이다.
+> **`...`** 는 **Spread Operator**로 ES6문법이며 **register함수**를 **spred해서 넣어주는 것**이다.
 >
 > 이렇게 해서 **register함수**가 반환하는 **객체**를 가져다가 **input에 props로 주는 것**이다.
 
@@ -738,7 +738,7 @@ console.log(watch());
 
 관리자 도구에서 마음대로 조작해서 데이터를 강제로 넣어줄 수 있는 것이다.
 
-그래서 HTML에 의지하느 대신, JavaScript에서 validation을 하는 것이다.
+그래서 HTML에 의지하는 대신, JavaScript에서 **validation**을 하는 것이다.
 
 다음과 같이 해보자.
 
@@ -925,15 +925,15 @@ minLenght의 경우 이와 같이도 가능하다.
 useForm({ mode: "onChnage" });
 ```
 
-useForm을 다음과 같이 변경하면 React Hook Form이 실시간으로 유호성 검사를 하게 된다. 먼저 input에 Validation을 설정한 다음 useForm에서 errors라는 객체를 가져오게 된다.
+useForm을 다음과 같이 변경하면 React Hook Form이 실시간으로 유효성 검사를 하게 된다. 먼저 input에 Validation을 설정한 다음 useForm에서 errors라는 객체를 가져오게 된다.
 
-> **errors**는 **에러들이 담긴 객체**로 현재는 모드가 **onChange**이기 때문에 **에러가 실시간을 업데이트** 된다.
+> **errors**는 **에러들이 담긴 객체**로 현재는 모드가 **onChange**이기 때문에 **에러가 실시간으로 업데이트** 된다.
 
 코드 예시는 이와 같다.
 
 ```tsx
 export default function App() {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({ mode: "onChnage" });
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -1156,7 +1156,7 @@ function ToDoList(){
 > foo = 3; // ❌ 숫자는 문자열 집합에 속하지 않는다.
 > ```
 >
-> 타입 스트립트에서 **nver**타입은 **값의 공집합**이다.
+> 타입 스트립트에서 **never**타입은 **값의 공집합**이다.
 >
 > 집합에 어떤 값도 없기 때문에, **never**타입은 **any** 타입의 값을 포함해 **어떤 값도 가질 수 없다.** 그래서 **never**타입은 때때로 **점유할 수 없는** 또는 **바닥 타입**이라고 불린다.
 >
@@ -1355,7 +1355,7 @@ export const toDoState = atom<IToDo[]>({
 });
 ```
 
-이렇게 함으로써 CreateToDO에서 toDoState를 사용할 수 있게 되었다.
+이렇게 함으로써 CreateToDo에서 toDoState를 사용할 수 있게 되었다.
 
 현재까지 구현한 코드보고 넘어가도록 하자.
 
@@ -1649,7 +1649,7 @@ const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
 
 기존의 To Do를 업데이트 하는 것이 아닌 새로운 To Do를 만드는 것이다.
 
-**기본적인 원리는 setToDos안에서 새로운 To Do를 만들어서 새로운 ToDos를 만들어** return하여 **기존의 ToDos를 업데이트** 해주는 것이다.
+**기본적인 원리는 setToDos안에서 새로운 To Do를 만들어서 return하여 기존의 ToDos를 업데이트** 해주는 것이다.
 
 새 category로 새로운 to do를 만들어 주자.
 

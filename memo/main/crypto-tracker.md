@@ -132,7 +132,7 @@ export default App;
 
 이제 우리가 준 **:coinId**를 잡아낼 것인데, 이건 이전에 배웠다.
 
-URL의 Parameter 부분을 잡아재고 싶을 때는 **useParams hooks**를 사용하면 된다.
+URL의 Parameter 부분을 잡고 싶을 때는 **useParams hooks**를 사용하면 된다.
 
 ```tsx
 // Coin.tsx
@@ -1014,7 +1014,7 @@ console.log(location);
 
 ![useLocation-consoleLog](./screenshots/useLocation-consoleLog.png)
 
-현재 담겨있는 정보보면, 내가 넣어준 **pathname**, **state**외에도 **search**나 **key**값이 담겨있는 것을 확인할 수 있다. **useLocation hooks**는 **Search params**를 받아올 때도 사용할 수 있다는 것이다. 기억해두자.
+현재 담겨있는 정보를 보면, 내가 넣어준 **pathname**, **state**외에도 **search**나 **key**값이 담겨있는 것을 확인할 수 있다. **useLocation hooks**는 **Search params**를 받아올 때도 사용할 수 있다는 것이다. 기억해두자.
 
 이제 받아오면 되는데, Interface생성도 잊지말고 해주자.
 
@@ -1393,7 +1393,7 @@ const Tab = styled.span<{ isActive: boolean }>`
 
 기본적인 순서만 보자면 이와 같다.
 
-1.  **querClinet를 만든다.**
+1.  **queryClinet를 만든다.**
 2.  **provider를 만든다.**
 
 index.tsx에서 해보자.
@@ -1627,7 +1627,7 @@ export function fetchCoinTickers(coinId: string) {
 }
 ```
 
-그리고 Coin.tsx가서 useQuery를 적어주면 된다.
+**fetchCoins**와는 다르게 인자를 받고있다. 그럴 경우 **useQuery**로 사용할 때 **함수**로 적어주면 된다.
 
 ```tsx
 //  Coins.tsx

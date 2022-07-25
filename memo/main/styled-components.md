@@ -323,7 +323,7 @@ function App() {
 
 ![styled-component-as](./screenshots/styled-component-as.png)
 
-이번엔 **attr(attribute)**를 주는 방법을 알아보자.
+이번엔 **attr(attribute)** 를 주는 방법을 알아보자.
 
 만약 input태그를 만들었다고 생각해보자.
 
