@@ -1,5 +1,24 @@
 # Animations
 
+- [Animations](#animations)
+  - [1. Framer Motion이란?](#1-framer-motion이란)
+  - [2. Installation](#2-installation)
+    - [2.1 ESM](#21-esm)
+    - [2.2 Error Correction](#22-error-correction)
+  - [3. How to ues?](#3-how-to-ues)
+    - [3.1 Animate](#31-animate)
+    - [3.2 Variants](#32-variants)
+    - [3.3 Gesture](#33-gesture)
+    - [3.4 Drag](#34-drag)
+    - [3.5 MotionValues](#35-motionvalues)
+    - [3.6 SVG Animation](#36-svg-animation)
+      - [3.6.1 Error Correction](#361-error-correction)
+    - [3.7 AnimatePresence](#37-animatepresence)
+    - [3.8 Slider](#38-slider)
+    - [3.9 layout Animation](#39-layout-animation)
+  - [4. Final Project](#4-final-project)
+  -
+
 이번 파트에서는 **Framer Motion**을 사용하여 React JS로 손쉽게 **Animation**을 구현하는 법을 배워볼 것이다.
 
 ## 1. Framer Motion이란?
@@ -266,7 +285,7 @@ function App() {
 
 우리는 CRACO라는 작업을 할 것이다.
 
-**C** Create, R **React**, **A** App, **C** Configuration,**O** Override
+**C** Create, **R** React, **A** App, **C** Configuration,**O** Override
 
 그래서 **CRACO**를 설치하고, **craco-config.js**파일을 생성해주자.
 
@@ -395,17 +414,17 @@ motion에서도 이 3개에 animate를 주기 위해서 각각 **prop**이 존�
 
 Box에 transition을 더 주면서 알아보자.
 
-transition에는 **type**이 존재하는데, **default값으론 "spring"**으로 되어 있다.
+transition에는 **type**이 존재하는데, **default값으론 "spring"** 으로 되어 있다.
 
 **spring**은 마지막에 말 그대로 **스프링처럼 튕기는 것**이다.
 
-선형적으로 진행하고 싶다면 **"tween"**을 사용하면 된다.
+선형적으로 진행하고 싶다면 **"tween"** 을 사용하면 된다.
 
 ```tsx
 transition={{ type: "tween" }}
 ```
 
-**stiffness**라는 것도 있는데, 이것은 **stiff(뻣뻣)**한 정도라고 생각하면 된다.
+**stiffness**라는 것도 있는데, 이것은 **stiff(뻣뻣)** 한 정도라고 생각하면 된다.
 
 ![box-stifness](./screenshots/box-stifness.gif)
 
@@ -708,7 +727,7 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
-const bosVariants = {};
+const boxVariants = {};
 
 function App() {
   return (
@@ -996,7 +1015,7 @@ MotionValue는 매우 유용하다. **애니메이션 내의 수치를 트래킹
 
 ![motionValue-exampleCode](./screenshots/motionValue-exampleCode.png)
 
-이와 같이 트래킹하기 위해선ㄹ **useMotionValue**를 사용한다.
+이와 같이 트래킹하기 위해선 **useMotionValue**를 사용한다.
 
 이것은 motion.div의 x좌표를 추적 할 것이다.
 
@@ -1253,7 +1272,7 @@ function App() {
 export default App;
 ```
 
-### 3.5 SVG Animation
+### 3.6 SVG Animation
 
 먼저 **SVG**가 무엇인지 알고 넘어가자.
 
@@ -1427,7 +1446,7 @@ function App() {
 
 이렇게 마무리가 된다.
 
-#### 3.5.1 Error Correction
+#### 3.6.1 Error Correction
 
 현재 코드를 살펴보자.
 
@@ -1506,7 +1525,7 @@ const Svg = styled.svg`
 
 ![svg-final-output](./screenshots/svg-final-output.gif)
 
-### 3.6 AnimatePresence
+### 3.7 AnimatePresence
 
 ![animate-presence](./screenshots/animate-presence.gif)
 
@@ -1620,7 +1639,7 @@ function App() {
 
 ![exit-animate](./screenshots/exit-animate.gif)
 
-### 3.7 Slider
+### 3.8 Slider
 
 **AnimatePresence**를 사용하는 방법은 알아봤다.
 
@@ -2060,7 +2079,7 @@ function App() {
 export default App;
 ```
 
-### 3.8 layout Animation
+### 3.9 layout Animation
 
 이번 파트에선 **layout animation**과 **shared layout animation**에 대해서 알아 볼 것이다.
 

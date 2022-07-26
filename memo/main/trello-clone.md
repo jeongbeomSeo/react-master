@@ -860,7 +860,7 @@ function Board({ toDos, boardId }: IBoardProps) {
 export default Board;
 ```
 
-이제 Board 내에서 item들이 움직이는 것을 해결할 ㄱ서이다.
+이제 Board 내에서 item들이 움직이는 것을 해결할 것이다.
 
 먼저, **onDragEnd의 args**를 확인해보자.
 
@@ -930,6 +930,8 @@ const onDragEnd = (info: DropResult) => {
 > `[source.droppableId]` 는 variable형태이다.
 
 > key값에 **`[대괄호]`** 가 있는 것은 **비구조화**를 하기 위함입니다.
+
+> 즉 key값에 **대괄호**를 사용하는 것은 key값에 변수를 넣어주겠다는 의미이다.
 
 ### 2.8 Cross Board Movement
 
